@@ -105,4 +105,9 @@ venv.bak/
 
 # custom
 .idea/*
+/.idea/*
+.idea
+.idea/workspace.xml
 .ipynb_checkpoints
+Analysis/.ipynb_checkpoints
+Analysis/.ipynb_checkpoints/*.ipynb
