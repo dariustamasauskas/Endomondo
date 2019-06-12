@@ -1,0 +1,12 @@
+
+- Calculate descriptive statistics for various fields
+- Create bar charts using these breakdowns:
+  - weekdays
+  - hour of the day
+  - workout type (running, bicycle, walking)
+- Visualize Calories/Distance/Time as a timeline
+- Visualize tracking data on the map
+- Understand which places were the most popular
+- Understand which part of the workout has the higher speed (start of the end)
+- Understand what are the factors for better intensity of the workouts
+- Understand if there is 100% correlation between calories and distance
