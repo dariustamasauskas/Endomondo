@@ -8,7 +8,7 @@ import Endomondo_parsing_functions as PF
 print('\nEndomondo Data Parser')
 
 # Collect all file names in a specified directory
-path = 'E:\Career\Data Science\Projects\Workshop\Endomondo\Raw Data'
+path = 'E:\Career\Data Science\Projects\Endomondo\Raw Data'
 filenames = []
 for files in glob.glob(os.path.join(path,'*.tcx')):
     filenames.append(files)
