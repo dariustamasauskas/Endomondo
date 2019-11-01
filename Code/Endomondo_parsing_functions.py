@@ -7,7 +7,7 @@ def extract_summary_data(filenames):
 	Extract the summary data from filenames and write it to .csv file
 	'''
 
-	fs_path = '../Parsed Data/'
+	fs_path = './Parsed Data/'
 	fs = 'summary_data.csv'
 	ws = open(fs_path + fs, 'w', newline='')
 	write_summary = csv.writer(ws)
@@ -43,7 +43,7 @@ def extract_tracking_data(filenames):
 	Extract the tracking data from filenames and write it to .csv file
 	'''
 
-	ft_path = '../Parsed Data/'
+	ft_path = './Parsed Data/'
 	ft = 'tracking_data.csv'
 	wt = open(ft_path + ft, 'w', newline='')
 	write_tracking = csv.writer(wt)
