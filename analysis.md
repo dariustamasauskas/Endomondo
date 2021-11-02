@@ -22,10 +22,14 @@ SELECT
     ST_GEOGPOINT(t.TrackingLongitude, t.TrackingLatitude) AS WorkoutCoord
 FROM Endomondo.summary AS s
 INNER JOIN Endomondo.tracking AS t
-USING (ActivityId)
+ON s.ActivityId = t.ActivityId
 ```
 
 ### What kind of workout types were captured per each year?
+
+As seen from the table below, 2017 was the year with the most workouts captured, mostly walking and running (null marks total workouts). The most walking workouts were captured in 2018. The least total workouts were captured in 2019. We can also see that walking workouts were the most popular amongst other workout types, while biking workouts were very rare.
+
+![Workouts per year](outputs/workouts_per_year.jpg)
 
 ```sql
 SELECT
@@ -39,6 +43,14 @@ GROUP BY ROLLUP(SportType)
 ```
 
 ### What are the monthly dynamics for each year and for each workout type?
+
+In the following graph we can see that running workouts were captured specifically from May to September, all the 4 years and the most running workouts were captured in 2017.
+
+![Monthly running](outputs/monthly_running.jpg)
+
+Walking workouts were captured during other months, from March to December. We can see that the peak months were during May-June and the decrease on later months, with the exception in 2017.
+
+![Monthly walking](outputs/monthly_walking.jpg)
 
 ```sql
 SELECT
@@ -54,6 +66,10 @@ ORDER BY WorkoutMonth
 ```
 
 ### Which day of the week was the most popular for workouts?
+
+We can see that Friday and Sunday were the two most popular days for doing workouts, Sunday being the most popular for running and Friday being the most popular for walking. The day with the least workouts was Saturday.
+
+![Workouts per weekday](outputs/workouts_per_weekday.jpg)
 
 ```sql
 SELECT
@@ -71,6 +87,12 @@ GROUP BY ROLLUP(SportType)
 
 ### Which hour of the day was the most popular for workouts?
 
+It is interesting to understand which hours of the day were the most popular for doing workouts. In the graph below we can see more evening workouts compared with the morning workouts (total count in bar charts). If we split workouts by type, we can see that running workouts were the most popular in the evenings, specifically around 7pm-8pm. Walking workouts were more popular in the middle and the end of the day.
+
+As workout hours are captured in GMT, 2 hours were added to calculate the local time. Also, some coordinates were filtered out, specifically the coordinates with Longitude values less than 0.
+
+![Workouts per hour](outputs/workouts_per_hour.jpg)
+
 ```sql
 SELECT
     EXTRACT(hour FROM s.StartTime) + 2 AS WorkoutHour,
@@ -80,13 +102,17 @@ SELECT
     COUNT(DISTINCT s.ActivityId) AS TotalCount
 FROM Endomondo.summary AS s
 INNER JOIN Endomondo.tracking AS t
-USING (ActivityId)
+ON s.ActivityId = t.ActivityId
 WHERE t.TrackingLongitude > 0
 GROUP BY 1
 ORDER BY WorkoutHour
 ```
 
 ### What is the average workout distance, time and speed for each workout type?
+
+The following table shows various statistics for each workout type through the years. We can see that biking workouts had the largest distance and speed. Running workouts were approximately around 4km of length during 2016, 2018 and 2019, with the exception in 2017, where the average distance was 6.6km. The running speed was pretty consistent during all the years and it was approximately 9.5 km/h. Walking workouts were approximately around 5km of length during 2016, 2018 and 2019, with the exception in 2017, where the average distance was 3.2km. Walking workout in 2017 were also the slowest and with the lowest duration.
+
+![Workouts statistics](outputs/workouts_statistics.jpg)
 
 ```sql
 SELECT
