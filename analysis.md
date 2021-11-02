@@ -12,6 +12,8 @@ Once the raw XML data was extracted and parsed into csv files, they were loaded 
 
 #### What are the places with the most workouts
 
+As seen from the map below, the majority of workouts are in the Vilnius area. Red color marks the walking workouts, green color - running workouts, and the blue color - biking workouts.
+
 ```sql
 SELECT
     CASE WHEN s.SportType = 'Other' THEN 'Walking' ELSE s.SportType END AS SportType,
@@ -100,5 +102,5 @@ ORDER BY SportType, WorkoutYear
 #### Which part of the workout has higher speed - start or end of the workout
 
 ```sql
-
+to be added
 ```
