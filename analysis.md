@@ -119,9 +119,9 @@ SELECT
     CASE WHEN SportType = 'Other' THEN 'Walking' ELSE SportType END AS SportType,
     EXTRACT(year FROM StartDate) AS WorkoutYear,
     COUNT(ActivityId) AS WorkoutCount,
-    ROUND(AVG(TotalDistance/1000),1) as AvgWorkoutDistance,
-    ROUND(AVG(TotalTime/3600),2) as AvgWorkoutTime,
-    ROUND(AVG(TotalDistance/1000)/AVG(TotalTime/3600),2) as AvgWorkoutSpeed
+    ROUND(AVG(TotalDistance/1000),1) AS AvgWorkoutDistance,
+    ROUND(AVG(TotalTime/3600),2) AS AvgWorkoutTime,
+    ROUND(AVG(TotalDistance/1000)/AVG(TotalTime/3600),2) AS AvgWorkoutSpeed
 FROM Endomondo.summary
 GROUP BY 1, 2
 ORDER BY SportType, WorkoutYear
@@ -136,7 +136,7 @@ As seen from the graph below, biking speed is decreasing quite significantly at 
 ![Workouts speeds](outputs/workouts_speeds.jpg)
 
 ```sql
-WITH calculations as (
+WITH calculations AS (
     SELECT
         ActivityID,
         TrackingID,
@@ -153,8 +153,8 @@ SELECT
          ELSE 'workout_4q'
     END AS WorkoutSplit,
     SUM(DistancePerID/1000) / SUM(TimePerID/3600) AS WorkoutSpeed
-FROM calculations as c
-INNER JOIN Endomondo.summary as s
+FROM calculations AS c
+INNER JOIN Endomondo.summary AS s
 ON c.ActivityID = s.ActivityID
 GROUP BY 1,2
 ```
