@@ -28,4 +28,4 @@ File tracking_data.csv consists of more detailed workout information and is mapp
 Later on, summary_data.csv and tracking_data.csv files were loaded into Google BigQuery and analyzed further by writing SQL queries. The analysis could be found in the following file:
 - analysis.md
 
-https://en.wikipedia.org/wiki/Endomondo
+More information about Endomondo app could be found [here](https://en.wikipedia.org/wiki/Endomondo)
