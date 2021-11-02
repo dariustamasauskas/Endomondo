@@ -2,15 +2,15 @@
 ## Endomondo data analysis
 
 Once the raw XML data was extracted and parsed into csv files, they were loaded into Google BigQuery. Now it is time to do some data analysis and try to answer some questions such as:
-- What are the places with the most workouts
-- What kind of workout types were captured per each year
-- What are the monthly dynamics for each year and for each workout type
-- Which day of the week was the most popular for workouts
-- Which hour of the day was the most popular for workouts
-- What is the average workout distance, time and speed for each workout type
-- Which part of the workout has higher speed - start or end of the workout
+- What are the places with the most workouts?
+- What kind of workout types were captured per each year?
+- What are the monthly dynamics for each year and for each workout type?
+- Which day of the week was the most popular for workouts?
+- Which hour of the day was the most popular for workouts?
+- What is the average workout distance, time and speed for each workout type?
+- Which part of the workout has higher speed - start or end of the workout?
 
-#### What are the places with the most workouts
+### What are the places with the most workouts?
 
 As seen from the map below, the majority of workouts are in the Vilnius area. Red color marks the walking workouts, green color - running workouts, and the blue color - biking workouts.
 
@@ -25,7 +25,7 @@ INNER JOIN Endomondo.tracking AS t
 USING (ActivityId)
 ```
 
-#### What kind of workout types were captured per each year
+### What kind of workout types were captured per each year?
 
 ```sql
 SELECT
@@ -38,7 +38,7 @@ FROM Endomondo.summary
 GROUP BY ROLLUP(SportType)
 ```
 
-#### What are the monthly dynamics for each year and for each workout type
+### What are the monthly dynamics for each year and for each workout type?
 
 ```sql
 SELECT
@@ -53,7 +53,7 @@ GROUP BY 1, 2
 ORDER BY WorkoutMonth
 ```
 
-#### Which day of the week was the most popular for workouts
+### Which day of the week was the most popular for workouts?
 
 ```sql
 SELECT
@@ -69,7 +69,7 @@ FROM Endomondo.summary
 GROUP BY ROLLUP(SportType)
 ```
 
-#### Which hour of the day was the most popular for workouts
+### Which hour of the day was the most popular for workouts?
 
 ```sql
 SELECT
@@ -86,7 +86,7 @@ GROUP BY 1
 ORDER BY WorkoutHour
 ```
 
-#### What is the average workout distance, time and speed for each workout type
+### What is the average workout distance, time and speed for each workout type?
 
 ```sql
 SELECT
@@ -101,7 +101,7 @@ GROUP BY 1, 2
 ORDER BY SportType, WorkoutYear
 ```
 
-#### Which part of the workout has higher speed - start or end of the workout
+### Which part of the workout has higher speed - start or end of the workout?
 
 ```sql
 to be added
