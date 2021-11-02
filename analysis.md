@@ -129,6 +129,32 @@ ORDER BY SportType, WorkoutYear
 
 ### Which part of the workout has higher speed - start or end of the workout?
 
+I wanted to understand if the higher speed of workout captured at the start of the workout or at the end of workout. I have split each workout even further - into 4 quartiles, instead of the halves.
+
+As seen from the graph below, biking speed is decreasing quite significantly at the end of workout, from 15.3 km/h to 10.9 km/h, probably due to fatigue. Running workout speed is also decreasing, from 10 km/h to 9.4 km/h, but not so significantly as for biking workouts. Walking workouts speed, differently from biking and running, is quite stable at around 5.1-5.2 km/h.
+
+![Workouts speeds](outputs/workouts_speeds.jpg)
+
 ```sql
-to be added
+WITH calculations as (
+    SELECT
+        ActivityID,
+        TrackingID,
+        COUNT(TrackingID) OVER (PARTITION BY ActivityID) AS TrackingsPerActivity,
+        TrackingDistance - LAG(TrackingDistance) OVER (PARTITION BY ActivityID ORDER BY TrackingID) AS DistancePerID,
+        EXTRACT(second FROM TrackingTime - LAG(TrackingTime) OVER (PARTITION BY ActivityID ORDER BY TrackingID)) AS TimePerID
+    FROM Endomondo.tracking
+)
+SELECT
+    CASE WHEN SportType = 'Other' THEN 'Walking' ELSE SportType END AS WorkoutType,
+    CASE WHEN TrackingID / TrackingsPerActivity <= 0.25 THEN 'workout_1q'
+         WHEN TrackingID / TrackingsPerActivity <= 0.5 THEN 'workout_2q'
+         WHEN TrackingID / TrackingsPerActivity <= 0.75 THEN 'workout_3q'
+         ELSE 'workout_4q'
+    END AS WorkoutSplit,
+    SUM(DistancePerID/1000) / SUM(TimePerID/3600) AS WorkoutSpeed
+FROM calculations as c
+INNER JOIN Endomondo.summary as s
+ON c.ActivityID = s.ActivityID
+GROUP BY 1,2
 ```
