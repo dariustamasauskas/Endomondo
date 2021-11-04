@@ -13,7 +13,7 @@ def data_parser():
     # Collect all file names in a specified directory
     path = './data/raw/'
     filenames = []
-    for files in glob.glob(os.path.join(path,'*.tcx')):
+    for files in glob.glob(os.path.join(path, '*.tcx')):
         filenames.append(files)
 
     # Print number of files found in the directory
@@ -32,9 +32,10 @@ def extract_summary_data(filenames):
 
 	fs_path = './data/parsed/'
 	fs = 'summary_data.csv'
-	ws = open(fs_path + fs, 'w', newline='')
+	ws = open(fs_path + fs, 'w', newline = '')
 	write_summary = csv.writer(ws)
-	head_summary = ['ActivityID', 'FileName', 'SportType', 'StartDate', 'StartTime', 'TotalTime', 'TotalDistance','TotalCalories']
+	head_summary = ['activity_id', 'file_name', 'sport_type', 'start_date',
+                    'start_time', 'total_time', 'total_distance', 'total_calories']
 	write_summary.writerow(head_summary)
 
 	print('\nFile', fs, 'was created with', len(head_summary), 'columns:')
@@ -53,11 +54,12 @@ def extract_summary_data(filenames):
 			total_time = s.find('ns:Lap', namespace).find('ns:TotalTimeSeconds', namespace).text
 			total_time_ = round(float(total_time))
 			total_distance = s.find('ns:Lap', namespace).find('ns:DistanceMeters', namespace).text
-			total_distance_ = round(float(total_distance),2)
+			total_distance_ = round(float(total_distance), 2)
 			total_calories = s.find('ns:Lap', namespace).find('ns:Calories', namespace).text
 		activity_id += 1
-		lines_s = [activity_id,fname[-19:],sport_type,start_datetime[:10],start_datetime[11:19],total_time_,total_distance_,total_calories]
-		write_summary.writerow(lines_s)
+		lines_summary = [activity_id, fname[-19:], sport_type, start_datetime[:10],
+                   start_datetime[11:19], total_time_, total_distance_, total_calories]
+		write_summary.writerow(lines_summary)
 
 	print('\nFile', fs, 'was appended with', activity_id, 'records.', '\n\n=====================')
 
@@ -68,9 +70,10 @@ def extract_tracking_data(filenames):
 
 	ft_path = './data/parsed/'
 	ft = 'tracking_data.csv'
-	wt = open(ft_path + ft, 'w', newline='')
+	wt = open(ft_path + ft, 'w', newline = '')
 	write_tracking = csv.writer(wt)
-	head_tracking = ['ActivityID', 'TrackingID', 'TrackingTime', 'TrackingLatitude', 'TrackingLongitude','TrackingDistance']
+	head_tracking = ['activity_id', 'tracking_id', 'tracking_time',
+                     'tracking_latitude', 'tracking_longitude', 'tracking_distance']
 	write_tracking.writerow(head_tracking)
 
 	print('\nFile', ft, 'was created with', len(head_tracking), 'columns:')
@@ -91,11 +94,12 @@ def extract_tracking_data(filenames):
 			tracking_latitude = t.find('ns:Position', namespace).find('ns:LatitudeDegrees', namespace).text
 			tracking_longitude = t.find('ns:Position', namespace).find('ns:LongitudeDegrees', namespace).text
 			tracking_distance = t.find('ns:DistanceMeters', namespace).text
-			tracking_distance_ = round(float(tracking_distance),2)
+			tracking_distance_ = round(float(tracking_distance), 2)
 			tracking_id += 1
 			counter += 1
-			lines_t = [activity_id,tracking_id,tracking_time[11:19],tracking_latitude,tracking_longitude,tracking_distance_]
-			write_tracking.writerow(lines_t)
+			lines_tracking = [activity_id, tracking_id, tracking_time[11:19],
+                       tracking_latitude, tracking_longitude, tracking_distance_]
+			write_tracking.writerow(lines_tracking)
 
 	print('\nFile', ft, 'was appended with', counter, 'records.')
 
