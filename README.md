@@ -8,22 +8,22 @@ Data was manually extracted from Endomondo website for each workout as .tcx file
 - tracking_data.csv
 
 File summary_data.csv consists of summary information of each workout - one row per workout. The data fields in summary_data.csv file are the following:
-- ActivityID
-- FileName
-- SportType
-- StartDate
-- StartTime
-- TotalTime
-- TotalDistance
-- TotalCalories
+- activity_id
+- file_name
+- sport_type
+- start_date
+- start_time
+- total_time
+- total_distance
+- total_calories
 
-File tracking_data.csv consists of more detailed workout information and is mapped to summary_data.csv via ActivityID field. The data fields in tracking_data.csv file are the following:
-- ActivityID
-- TrackingID
-- TrackingTime
-- TrackingLatitude
-- TrackingLongitude
-- TrackingDistance
+File tracking_data.csv consists of more detailed workout information and is mapped to summary_data.csv via activity_id field. The data fields in tracking_data.csv file are the following:
+- activity_id
+- tracking_id
+- tracking_time
+- tracking_latitude
+- tracking_longitude
+- tracking_distance
 
 Later on, summary_data.csv and tracking_data.csv files were loaded into Google BigQuery and analyzed further by writing SQL queries. The analysis could be found in the following file:
 - analysis.md
